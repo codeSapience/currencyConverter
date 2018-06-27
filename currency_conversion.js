@@ -69,5 +69,3 @@ Description: A Vanilla-js library to convert amount in one currency to another.
             document.getElementById('conversionResult').innerHTML = ` <span class="text-warning">${convertedValue}</span>`
             });
         }
-
-        
