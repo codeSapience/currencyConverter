@@ -59,7 +59,7 @@ let currencies_url;
           .then(data => conversionDetails = data)
           .then(() => {
             conversionRate = conversionDetails.results[query].val;
-            convertedValue = amount * conversionRate;
+            convertedValue = (amount * conversionRate).toFixed(2);
             document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
             // console.log(convertedValue);
           })
