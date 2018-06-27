@@ -14,7 +14,7 @@ let currencies_url;
         .then(res => res.json())
         .then(JSONdata => JSobj = JSONdata)
         .then(() => {
-            console.log(JSobj);
+            // console.log(JSobj);
             const results = JSobj.results;
             let resultsKeys = Object.keys(results);
             // let resultsValues = Object.values(results);
@@ -24,7 +24,7 @@ let currencies_url;
             }
             document.getElementById("fromThisCurrencyId").innerHTML = `<option value="">From</option>${dropdownText}`;
             document.getElementById("toThatCurrencyId").innerHTML = `<option value="">To</option>${dropdownText}`;
-            console.log(dropdownText);
+            // console.log(dropdownText);
         });
 
 
@@ -60,9 +60,12 @@ let currencies_url;
           .then(() => {
             conversionRate = conversionDetails.results[query].val;
             convertedValue = amount * conversionRate;
-            // document.getElementById("conversionResultField").value = convertedValue;
             document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
             // console.log(convertedValue);
           })
-          .catch(() => console.log(`Failed to fetch from ${url}`));
+          .catch(() => {
+            convertedValue = 'Something is not right! Check your Connection and try again.';
+            // document.getElementById("conversionResultField").value = convertedValue;
+            document.getElementById('conversionResult').innerHTML = ` <span class="text-warning">${convertedValue}</span>`
+            });
         }
