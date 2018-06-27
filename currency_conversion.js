@@ -6,7 +6,7 @@ Description: A Vanilla-js library to convert amount in one currency to another.
 
 */
 
-let currencies_url;
+        let currencies_url;
 
         currencies_url = "https://free.currencyconverterapi.com/api/v5/currencies";
 
@@ -59,7 +59,7 @@ let currencies_url;
           .then(data => conversionDetails = data)
           .then(() => {
             conversionRate = conversionDetails.results[query].val;
-            convertedValue = amount * conversionRate;
+            convertedValue = (amount * conversionRate).toFixed(2);
             document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
             // console.log(convertedValue);
           })
@@ -69,3 +69,5 @@ let currencies_url;
             document.getElementById('conversionResult').innerHTML = ` <span class="text-warning">${convertedValue}</span>`
             });
         }
+
+        
