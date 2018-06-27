@@ -13,7 +13,7 @@ let currencies_url;
         fetch(currencies_url)
         .then(res => res.json())
         .then(JSONdata => JSobj = JSONdata)
-        .then(function() {
+        .then(() => {
             console.log(JSobj);
             const results = JSobj.results;
             let resultsKeys = Object.keys(results);
@@ -29,34 +29,40 @@ let currencies_url;
 
 
         function convertCurrency() {
-	      let amountEntered, fromInput, toInput, query, conversionDetails, conversion_url, conversionRate, convertedValue;
-		  amountEntered = document.getElementById("amountInThisCurrency").value;
-		  fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
-      toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
-		  if (amountEntered == "") {
-		    alert("Enter an amount");
-		  	return false;
-		  } else if (fromCurrency == "") {
-		    alert("Choose a Currency to convert from");
-		  	return false;
-		  } else if (toCurrency == "") {
-		    alert("Select a Currency to convert to");
-		  	return false;
-		  }
-		  amount = Math.abs(amountEntered);
+          let amountEntered;
+          let fromInput;
+          let toInput;
+          let query;
+          let conversionDetails;
+          let conversion_url;
+          let conversionRate;
+          let convertedValue;
+          amountEntered = document.getElementById("amountInThisCurrency").value;
+          fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
+          toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
+          if (amountEntered == "") {
+        alert("Enter an amount");
+        return false;
+      } else if (fromCurrency == "") {
+        alert("Choose a Currency to convert from");
+        return false;
+      } else if (toCurrency == "") {
+        alert("Select a Currency to convert to");
+        return false;
+      }
+          amount = Math.abs(amountEntered);
           query = `${fromCurrency}_${toCurrency}`;
-		  conversion_url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}`;
+          conversion_url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}`;
 
           fetch(conversion_url)
           .then(res => res.json())
           .then(data => conversionDetails = data)
-          .then(function() {
-          	conversionRate = conversionDetails.results[query].val;
-          	convertedValue = amount * conversionRate;
-          	// document.getElementById("conversionResultField").value = convertedValue;
+          .then(() => {
+            conversionRate = conversionDetails.results[query].val;
+            convertedValue = amount * conversionRate;
+            // document.getElementById("conversionResultField").value = convertedValue;
             document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
-          	// console.log(convertedValue);
+            // console.log(convertedValue);
           })
           .catch(() => console.log(`Failed to fetch from ${url}`));
-
-		}
+        }
