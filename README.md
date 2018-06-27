@@ -1,4 +1,4 @@
 # currencyConverter
 # by Akintade BRITTO
 
-Currency conversion web app as an ALC personal project.
+Currency conversion (static) web app as an ALC personal project.

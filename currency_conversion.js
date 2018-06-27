@@ -53,8 +53,8 @@ let currencies_url;
           .then(function() {
           	conversionRate = conversionDetails.results[query].val;
           	convertedValue = amount * conversionRate;
-          	document.getElementById("conversionResultField").value = convertedValue;
-            document.getElementById('conversionResult').innerHTML = `${amountEntered} <span><b>${fromCurrency}</b></span> = ${convertedValue} <b>${toCurrency}</b>`
+          	// document.getElementById("conversionResultField").value = convertedValue;
+            document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
           	// console.log(convertedValue);
           })
           .catch(() => console.log(`Failed to fetch from ${url}`));
