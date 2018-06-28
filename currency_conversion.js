@@ -22,8 +22,8 @@ Description: A Vanilla-js library to convert amount in one currency to another.
             for (item of resultsKeys){
                 dropdownText += `<option value="${results[item].id}">${results[item].id} (${results[item].currencyName})</option>`;
             }
-            document.getElementById("fromThisCurrencyId").innerHTML = `<option value="">From</option>${dropdownText}`;
-            document.getElementById("toThatCurrencyId").innerHTML = `<option value="">To</option>${dropdownText}`;
+            document.getElementById("fromThisCurrencyId").innerHTML = `<option value=""></option>${dropdownText}`;
+            document.getElementById("toThatCurrencyId").innerHTML = `<option value=""></option>${dropdownText}`;
             // console.log(dropdownText);
         });
 
@@ -42,12 +42,15 @@ Description: A Vanilla-js library to convert amount in one currency to another.
           toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
           if (amountEntered == "") {
         alert("Enter an amount");
+        document.getElementById("amountInThisCurrency").focus();
         return false;
       } else if (fromCurrency == "") {
         alert("Choose a Currency to convert from");
+        document.getElementById("fromThisCurrencyId").focus();
         return false;
       } else if (toCurrency == "") {
         alert("Select a Currency to convert to");
+        document.getElementById("toThatCurrencyId").focus();
         return false;
       }
           amount = Math.abs(amountEntered);
