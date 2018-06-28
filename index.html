@@ -15,29 +15,29 @@
 	<section class="container" style="padding: 5%">
 		<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-offset-2 col-md-offset-3 col-lg-offset-4">
 			<div class="panel">
-				<div class="panel panel-heading panel-primary">
-					<h3 class="text-center"><b>Currency Converter</b></h3>
+				<div class="panel panel-heading panel-primary" style="border: 1px solid cornflowerblue">
+					<h3 class="text-center text-primary"><b>Currency Converter</b></h3>
 				</div>
-				<div class="panel panel-body">
+				<div class="panel panel-body" style="border: 1px dotted cornflowerblue">
 			        <form>
 			        	<label for="amountInThisCurrency"></label>
-				        <input type="number" id="amountInThisCurrency" class="form-control" placeholder="Amount" autofocus required /><br>
-
+				        <input type="number" id="amountInThisCurrency" class="form-control" placeholder="Amount" autofocus required />
+				        
 				        <label for="fromThisCurrencyId"></label>
-						<select id="fromThisCurrencyId" class="form-control" required ></select><br>
-						
+						<select id="fromThisCurrencyId" class="form-control" required ></select>
+
 						<label for="toThatCurrencyId"></label>
 				        <select id="toThatCurrencyId" class="form-control" required ></select><br>
 				    </form>
 
-			    	<button class="btn btn-primary form-control" onclick="convertCurrency()">
+			    	<button class="btn btn-success form-control" onclick="convertCurrency()">
 			    		<span><i class="fa fa-arrow-right"></i> </span> Convert
 			    	</button>
 			    	<br>
 			        
 				</div>
 
-				<div class="panel panel-footer">	
+				<div class="panel panel-footer panel-success">	
 		        	<h3 id="conversionResult" class="text-center text-success"></h3>
 		        </div>
 			</div>
