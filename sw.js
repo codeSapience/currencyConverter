@@ -14,14 +14,14 @@ self.addEventListener('install', event => {
 });
 
 
-self.addEventListener('fetch', event => {  
-  const { request } = event;
+// self.addEventListener('fetch', event => {  
+//   const { request } = event;
 
-  event.respondWith(caches.open(CACHE_NAME)
-    .then(cache => cache.match(request))
-    .then(matching => matching || fetch(request)));
+//   event.respondWith(caches.open(CACHE_NAME)
+//     .then(cache => cache.match(request))
+//     .then(matching => matching || fetch(request)));
 
-  event.waitUntil(caches.open(CACHE_NAME)
-    .then(cache => fetch(request)
-      .then(response => cache.put(request, response))));
-});
+//   event.waitUntil(caches.open(CACHE_NAME)
+//     .then(cache => fetch(request)
+//       .then(response => cache.put(request, response))));
+// });
