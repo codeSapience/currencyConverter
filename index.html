@@ -58,7 +58,7 @@
 	</section>
 
 	<footer>
-		<!-- <script type="text/javascript" src="sw.js"></script> -->
+		<script type="text/javascript" src="./sw.js"></script>
 		<!-- <script type="text/javascript" src="./currency_conversion.js"></script> -->
 		<script type="text/javascript" src="./idb.js"></script>
 	</footer>
@@ -79,7 +79,7 @@
 
 
 	 if ('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('sw.js')
       .then(function(reg) {
         // Message for successful sw registration
         console.log('Successful! Currency Converter SW has been registered.');
