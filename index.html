@@ -59,7 +59,126 @@
 
 	<footer>
 		<!-- <script type="text/javascript" src="sw.js"></script> -->
-		<script type="text/javascript" src="./currency_conversion.js"></script>
+		<!-- <script type="text/javascript" src="./currency_conversion.js"></script> -->
+		<script type="text/javascript" src="./idb.js"></script>
 	</footer>
+
+<script type="text/javascript">
+  /* ADDED SCRIPTS HERE BECAUSE I WASN'T ABLE TO IMPORT idb.js INTO currency_conversion.js, 
+    CAUSE WE WERE RESTRICTED FROM USING NODE.JS AND OTHER SOLPHISTICATED TOOLS/LIBRARIES
+  **/
+
+	// console.log(idb);
+	// idb.open('test-db', 1, function(upgradeDb) {
+	// 	let keyValStore = upgradeDb.createObjectStore('keyval');
+	// 	keyValStore.put('world', 'hello');
+	// 	keyValStore.put('worldyy', 'hello');
+	// 	console.log(keyValStore.get('hello'));
+	// });
+
+
+
+	 if ('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) {
+        // Message for successful sw registration
+        console.log('Successful! Currency Converter SW has been registered.');
+      }).catch(function(error) {
+        // Message for failed sw registration
+        console.log(`UNSUCCESSFUL! Currency Converter SW registration failed. ${error}`);
+      });
+    }
+
+    let currencies_url;
+
+    currencies_url = "https://free.currencyconverterapi.com/api/v5/currencies";
+
+    fetch(currencies_url)
+    .then(res => res.json())
+    .then(JSONdata => JSobj = JSONdata)
+    .then(() => {
+        // console.log(JSobj);
+        const results = JSobj.results;
+        let resultsKeys = Object.keys(results).sort();
+        // let resultsValues = Object.values(results);
+        let dropdownText = "";
+        for (item of resultsKeys){
+            dropdownText += `<option value="${results[item].id}">${results[item].id} (${results[item].currencyName})</option>`;
+        }
+        document.getElementById("fromThisCurrencyId").innerHTML = `<option value=""></option>${dropdownText}`;
+        document.getElementById("toThatCurrencyId").innerHTML = `<option value=""></option>${dropdownText}`;
+        // console.log(dropdownText);
+    });
+
+
+    function convertCurrency() {
+      let amountEntered;
+      let fromInput;
+      let toInput;
+      let query;
+      let conversionDetails;
+      let conversion_url;
+      let conversionRate;
+      let convertedValue;
+      let keyValStore;
+      let storedConversionRate;
+      amountEntered = document.getElementById("amountInThisCurrency").value;
+      fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
+      toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
+      if (amountEntered == "") {
+    alert("Enter an amount");
+    document.getElementById("amountInThisCurrency").focus();
+    return false;
+  } else if (fromCurrency == "") {
+    alert("Choose a Currency to convert from");
+    document.getElementById("fromThisCurrencyId").focus();
+    return false;
+  } else if (toCurrency == "") {
+    alert("Select a Currency to convert to");
+    document.getElementById("toThatCurrencyId").focus();
+    return false;
+  }
+      amount = Math.abs(amountEntered);
+      query = `${fromCurrency}_${toCurrency}`;
+      conversion_url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}`;
+
+      // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+      //     keyValStore = upgradeDb.createObjectStore('keyval')
+      //   })
+
+      fetch(conversion_url)
+      .then(res => res.json())
+      .then(data => conversionDetails = data)
+      .then(() => {
+
+      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+			keyValStore = upgradeDb.createObjectStore('keyval')		
+			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
+		});
+        
+        conversionRate = conversionDetails.results[query].val;
+        convertedValue = (amount * conversionRate).toFixed(2);
+        document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
+        // console.log(convertedValue);
+      })
+      .catch(() => {
+      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+			keyValStore = upgradeDb.createObjectStore('keyval')		
+	        storedConversionRate = idb.keyValStore.get(query);
+		});
+        if (storedConversionDetails) {
+          convertedValue = (amount * storedConversionRate).toFixed(2);
+          document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
+        }
+        convertedValue = 'Something is not right! Check your Connection and try again.';
+        // document.getElementById("conversionResultField").value = convertedValue;
+        document.getElementById('conversionResult').innerHTML = ` <span class="text-warning">${convertedValue}</span>`
+        });
+    }
+
+
+
+</script>
+
 </body>
 </html>
