@@ -79,7 +79,7 @@
 
 
 	 if ('serviceWorker' in navigator){
-      navigator.serviceWorker.register('./sw.js')
+      navigator.serviceWorker.register('/sw.js')
       .then(function(reg) {
         // Message for successful sw registration
         console.log('Successful! Currency Converter SW has been registered.');
@@ -163,8 +163,8 @@
       })
       .catch(() => {
       	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-			keyValStore = upgradeDb.createObjectStore('keyval')		
-	        storedConversionRate = idb.keyValStore.get(query);
+		    keyValStore = upgradeDb.createObjectStore('keyval')		
+        storedConversionRate = idb.keyValStore.get(query);
 		});
         if (storedConversionDetails) {
           convertedValue = (amount * storedConversionRate).toFixed(2);
