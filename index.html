@@ -78,7 +78,7 @@
 
 
 
-	 if ('serviceWorker' in navigator){
+    if ('serviceWorker' in navigator){
       navigator.serviceWorker.register('sw.js')
       .then(function(reg) {
         // Message for successful sw registration
@@ -90,8 +90,9 @@
     }
 
     let currencies_url;
+    let myKey = "17ab63f420e1f83b67c6";
 
-    currencies_url = "https://free.currencyconverterapi.com/api/v5/currencies";
+    currencies_url = `https://free.currencyconverterapi.com/api/v5/currencies?apiKey=${myKey}`;
 
     fetch(currencies_url)
     .then(res => res.json())
