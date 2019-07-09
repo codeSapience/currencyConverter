@@ -89,7 +89,7 @@
       });
     }
 
-    let currencies_url;
+    var currencies_url;
     var myKey = "17ab63f420e1f83b67c6";
 
     currencies_url = `https://free.currencyconverterapi.com/api/v5/currencies?apiKey=${myKey}`;
@@ -118,12 +118,12 @@
       let toInput;
       var query;
       var conversionDetails;
-      var conversion_url;
+      // var conversion_url;
       var conversionRate;
       var convertedValue;
       var keyValStore;
       var storedConversionRate;
-      let myKey = "17ab63f420e1f83b67c6";
+      // let myKey = "17ab63f420e1f83b67c6";
       amountEntered = document.getElementById("amountInThisCurrency").value;
       fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
       toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
@@ -142,10 +142,8 @@
   }
       let amount = Math.abs(amountEntered);
       query = `${fromCurrency}_${toCurrency}`;
-      console.log(query);
       let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
       conversion_url = `${base_url}?q=${query}&apiKey=${myKey}`;
-      console.log(conversion_url);
 
       // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
       //     keyValStore = upgradeDb.createObjectStore('keyval')
@@ -156,22 +154,16 @@
       .then(data => conversionDetails = data)
       .then(() => {
 
-//      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-//			keyValStore = upgradeDb.createObjectStore('keyval');	
-//			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
-//		});
+      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+			keyValStore = upgradeDb.createObjectStore('keyval');	
+			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
+		});
         
         conversionRate = conversionDetails.results[query].val;
-        console.log(conversionRate)
         convertedValue = (amount * conversionRate).toFixed(2);
         document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
-        console.log(convertedValue);
       })
       .catch(() => {
-//      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-//		keyValStore = upgradeDb.createObjectStore('keyval');
-//		storedConversionRate = idb.keyValStore.get(query);
-//		});
         if (storedConversionRate) {
           convertedValue = (amount * storedConversionRate).toFixed(2);
           document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
