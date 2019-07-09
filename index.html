@@ -116,13 +116,13 @@
       let amountEntered;
       let fromInput;
       let toInput;
-      let query;
-      let conversionDetails;
-//       let conversion_url;
-      let conversionRate;
-      let convertedValue;
-//       let keyValStore;
-      let storedConversionRate;
+      var query;
+      var conversionDetails;
+      var conversion_url;
+      var conversionRate;
+      var convertedValue;
+      var keyValStore;
+      var storedConversionRate;
       let myKey = "17ab63f420e1f83b67c6";
       amountEntered = document.getElementById("amountInThisCurrency").value;
       fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
@@ -143,7 +143,7 @@
       let amount = Math.abs(amountEntered);
       query = `${fromCurrency}_${toCurrency}`;
       let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
-      let conversion_url = `${base_url}?q=${query}?apiKey=${myKey}`;
+      conversion_url = `${base_url}?q=${query}?apiKey=${myKey}`;
 
       // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
       //     keyValStore = upgradeDb.createObjectStore('keyval')
@@ -155,7 +155,7 @@
       .then(() => {
 
       	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-			let keyValStore = upgradeDb.createObjectStore('keyval')		
+			keyValStore = upgradeDb.createObjectStore('keyval');	
 			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
 		});
         
@@ -166,8 +166,8 @@
       })
       .catch(() => {
       	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-		    keyValStore = upgradeDb.createObjectStore('keyval')		
-        storedConversionRate = idb.keyValStore.get(query);
+		keyValStore = upgradeDb.createObjectStore('keyval');
+		storedConversionRate = idb.keyValStore.get(query);
 		});
         if (storedConversionRate) {
           convertedValue = (amount * storedConversionRate).toFixed(2);
