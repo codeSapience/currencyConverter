@@ -122,6 +122,7 @@
       let convertedValue;
       let keyValStore;
       let storedConversionRate;
+      let myKey = "17ab63f420e1f83b67c6";
       amountEntered = document.getElementById("amountInThisCurrency").value;
       fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
       toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
@@ -138,9 +139,10 @@
     document.getElementById("toThatCurrencyId").focus();
     return false;
   }
-      amount = Math.abs(amountEntered);
+      let amount = Math.abs(amountEntered);
       query = `${fromCurrency}_${toCurrency}`;
-      conversion_url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}`;
+      let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
+      conversion_url = `${base_url}?q=${query}?apiKey=${myKey}`;
 
       // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
       //     keyValStore = upgradeDb.createObjectStore('keyval')
