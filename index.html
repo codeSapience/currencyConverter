@@ -142,8 +142,10 @@
   }
       let amount = Math.abs(amountEntered);
       query = `${fromCurrency}_${toCurrency}`;
+      console.log(query);
       let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
       conversion_url = `${base_url}?q=${query}?apiKey=${myKey}`;
+      console.log(conversion_url);
 
       // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
       //     keyValStore = upgradeDb.createObjectStore('keyval')
@@ -152,29 +154,30 @@
       fetch(conversion_url)
       .then(res => res.json())
       .then(data => conversionDetails = data)
-      .then(() => {
+//      .then(() => {
 
-      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-			keyValStore = upgradeDb.createObjectStore('keyval');	
-			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
-		});
+//      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+//			keyValStore = upgradeDb.createObjectStore('keyval');	
+//			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
+//		});
         
         conversionRate = conversionDetails.results[query].val;
+        console.log(conversionRate)
         convertedValue = (amount * conversionRate).toFixed(2);
         document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
-        // console.log(convertedValue);
+        console.log(convertedValue);
       })
       .catch(() => {
-      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-		keyValStore = upgradeDb.createObjectStore('keyval');
-		storedConversionRate = idb.keyValStore.get(query);
-		});
+//      	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
+//		keyValStore = upgradeDb.createObjectStore('keyval');
+//		storedConversionRate = idb.keyValStore.get(query);
+//		});
         if (storedConversionRate) {
           convertedValue = (amount * storedConversionRate).toFixed(2);
           document.getElementById('conversionResult').innerHTML = ` = <b>${convertedValue}</b>`
         }
         convertedValue = 'Something is not right! Check your Connection and try again.';
-        // document.getElementById("conversionResultField").value = convertedValue;
+
         document.getElementById('conversionResult').innerHTML = ` <span class="text-warning">${convertedValue}</span>`
         });
     }
