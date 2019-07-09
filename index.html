@@ -144,7 +144,7 @@
       query = `${fromCurrency}_${toCurrency}`;
       console.log(query);
       let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
-      conversion_url = `${base_url}?q=${query}?apiKey=${myKey}`;
+      conversion_url = `${base_url}?q=${query}&apiKey=${myKey}`;
       console.log(conversion_url);
 
       // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
