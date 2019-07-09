@@ -118,12 +118,10 @@
       let toInput;
       var query;
       var conversionDetails;
-      // var conversion_url;
       var conversionRate;
       var convertedValue;
       var keyValStore;
       var storedConversionRate;
-      // let myKey = "17ab63f420e1f83b67c6";
       amountEntered = document.getElementById("amountInThisCurrency").value;
       fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
       toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
@@ -145,19 +143,15 @@
       let base_url = "https://free.currencyconverterapi.com/api/v5/convert"
       conversion_url = `${base_url}?q=${query}&apiKey=${myKey}`;
 
-      // idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-      //     keyValStore = upgradeDb.createObjectStore('keyval')
-      //   })
-
       fetch(conversion_url)
       .then(res => res.json())
       .then(data => conversionDetails = data)
       .then(() => {
 
       	idb.open('savedConvRatesDb', 1, function(upgradeDb) {
-			keyValStore = upgradeDb.createObjectStore('keyval');	
-			keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
-		});
+          keyValStore = upgradeDb.createObjectStore('keyval');	
+          keyValStore.put(conversionDetails.results[query].val, conversionDetails.results[query].id);
+        });
         
         conversionRate = conversionDetails.results[query].val;
         convertedValue = (amount * conversionRate).toFixed(2);
