@@ -112,7 +112,7 @@
     });
 
 
-    function convertCurrency(myKey=myKey) {
+    function convertCurrency() {
       let amountEntered;
       let fromInput;
       let toInput;
@@ -123,7 +123,7 @@
       let convertedValue;
       let keyValStore;
       let storedConversionRate;
-//       let myKey = "17ab63f420e1f83b67c6";
+      let myKey = "17ab63f420e1f83b67c6";
       amountEntered = document.getElementById("amountInThisCurrency").value;
       fromCurrency = encodeURIComponent(document.getElementById("fromThisCurrencyId").value);
       toCurrency = encodeURIComponent(document.getElementById("toThatCurrencyId").value);
